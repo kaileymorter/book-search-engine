@@ -12,7 +12,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git@work.github.com:arosenkranz/googlebooks-app.git"
+    "url": "git@work.github.com:kaileymorter/book-search-engine.git"
   },
   "keywords": [],
   "author": "",
@@ -21,6 +21,6 @@
     "if-env": "^1.0.4"
   },
   "devDependencies": {
-    "concurrently": "^5.2.0"
+    "concurrently": "^5.3.0"
   }
 }
