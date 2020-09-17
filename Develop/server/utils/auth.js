@@ -1,7 +1,7 @@
 const jwt = require('jsonwebtoken');
 
 // set token secret and expiration date
-const secret = 'mysecretsshhhhh';
+const secret = 'mysupersecret';
 const expiration = '2h';
 
 module.exports = {
@@ -15,21 +15,22 @@ module.exports = {
       token = token.split(' ').pop().trim();
     }
 
-    // if no token, return request object as is
     if (!token) {
+      // return res.status(400).json({ message: 'You have no token!' });
       return req;
     }
 
     // verify token and get user data out of it
     try {
-      // decode and attach user data to request object
       const { data } = jwt.verify(token, secret, { maxAge: expiration });
       req.user = data;
     } catch {
       console.log('Invalid token');
+      // return res.status(400).json({ message: 'invalid token!' });
     }
 
-    // return updated request object
+    // send to next endpoint
+    // next();
     return req;
   },
   signToken: function ({ username, email, _id }) {
