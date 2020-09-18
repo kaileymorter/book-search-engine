@@ -1,6 +1,6 @@
 import gql from 'graphql-tag';
 
-export const GET_ME = gql`
+export const GET_USER = gql`
   {
     me {
       _id
@@ -13,7 +13,7 @@ export const GET_ME = gql`
         image
         description
         title
-        link 
+        link
       }
     }
   }
