@@ -1,12 +1,12 @@
 // see SignupForm.js for comments
 import React, { useState } from 'react';
-import Auth from '../utils/auth';
 import { Form, Button, Alert } from 'react-bootstrap';
+import Auth from '../utils/auth';
 import { LOGIN_USER } from '../utils/mutations';
 import { useMutation } from '@apollo/react-hooks';
 
 const LoginForm = () => {
-  const [login, {error} ] = useMutation(LOGIN_USER);
+  const [login] = useMutation(LOGIN_USER);
   const [userFormData, setUserFormData] = useState({ email: '', password: '' });
   const [validated] = useState(false);
   const [showAlert, setShowAlert] = useState(false);
@@ -22,17 +22,18 @@ const LoginForm = () => {
   const handleFormSubmit = async event => {
     event.preventDefault();
 
-    // check if form has everything (as per react-bootstrap docs)
-    // const form = event.currentTarget;
-    // if (form.checkValidity() === false) {
-    //   event.preventDefault();
-    //   event.stopPropagation();
-    // }
+     // check if form has everything (as per react-bootstrap docs)
+     const form = event.currentTarget;
+     if (form.checkValidity() === false) {
+       event.preventDefault();
+       event.stopPropagation();
+     }
 
     try {
       const { data } = await login({
         variables: {...userFormData} 
       });
+      
       Auth.login(data.login.token);
     } catch (e) {
       console.error(e);
@@ -60,6 +61,7 @@ const LoginForm = () => {
             name='email'
             onChange={handleInputChange}
             value={userFormData.email}
+            autoComplete= "on"
             required
           />
           <Form.Control.Feedback type='invalid'>Email is required!</Form.Control.Feedback>
@@ -73,6 +75,7 @@ const LoginForm = () => {
             name='password'
             onChange={handleInputChange}
             value={userFormData.password}
+            autoComplete= "on"
             required
           />
           <Form.Control.Feedback type='invalid'>Password is required!</Form.Control.Feedback>
@@ -83,7 +86,6 @@ const LoginForm = () => {
           variant='success'>
           Submit
         </Button>
-        {error && <div>Login failed</div>}
       </Form>
     </>
   );

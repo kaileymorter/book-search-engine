@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
-import Auth from '../utils/auth';
 import { Form, Button, Alert } from 'react-bootstrap';
+// import { createUser } from '../utils/API';
+import Auth from '../utils/auth';
 import { ADD_USER } from '../utils/mutations';
 import { useMutation } from '@apollo/react-hooks';
 
 const SignupForm = () => {
-  const [addUser, { error }] = useMutation(ADD_USER);
+  const [addUser] = useMutation(ADD_USER);
   // set initial form state
   const [userFormData, setUserFormData] = useState({ username: '', email: '', password: '' });
   // set state for form validation
@@ -18,24 +19,28 @@ const SignupForm = () => {
     setUserFormData({ ...userFormData, [name]: value });
   };
 
-  const handleFormSubmit = async event => {
+  const handleFormSubmit = async (event) => {
     event.preventDefault();
 
     // check if form has everything (as per react-bootstrap docs)
-    // const form = event.currentTarget;
-    // if (form.checkValidity() === false) {
-    //   event.preventDefault();
-    //   event.stopPropagation();
-    // }
+    const form = event.currentTarget;
+    if (form.checkValidity() === false) {
+      event.preventDefault();
+      event.stopPropagation();
+    }
 
     try {
       const { data } = await addUser({
-        variables: {...userFormData}
+        variables: {...userFormData},
       });
 
+      // if (error) {
+      //   throw new Error('Something went wrong!');
+      // }
+
       Auth.login(data.addUser.token);
-    } catch (e) {
-      console.error(e);
+    } catch (err) {
+      console.error(err);
       setShowAlert(true);
     }
 
@@ -76,6 +81,7 @@ const SignupForm = () => {
             name='email'
             onChange={handleInputChange}
             value={userFormData.email}
+            autoComplete="on"
             required
           />
           <Form.Control.Feedback type='invalid'>Email is required!</Form.Control.Feedback>
@@ -89,6 +95,7 @@ const SignupForm = () => {
             name='password'
             onChange={handleInputChange}
             value={userFormData.password}
+            autoComplete="on"
             required
           />
           <Form.Control.Feedback type='invalid'>Password is required!</Form.Control.Feedback>
@@ -99,7 +106,6 @@ const SignupForm = () => {
           variant='success'>
           Submit
         </Button>
-        {error && <div>Sign up failed</div>}
       </Form>
     </>
   );
