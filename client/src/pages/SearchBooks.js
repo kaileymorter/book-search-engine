@@ -129,6 +129,7 @@ const SearchBooks = () => {
                   <p className='small'>Authors: {book.authors}</p>
                   <Card.Text>{book.description}</Card.Text>
                   <a href={book.link} target='_blank'>View on Google Books</a>
+                  <p></p>
                   {Auth.loggedIn() && (
                     <Button
                       disabled={savedBookIds?.some((savedBookId) => savedBookId === book.bookId)}
