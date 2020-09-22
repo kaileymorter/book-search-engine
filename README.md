@@ -6,6 +6,8 @@ A MERN stack application that uses Google Books API and allows a user to login, 
 
 **[Deployed Application](https://cryptic-anchorage-85159.herokuapp.com/)**
 
+![Screen Shot 2020-09-22 at 12 17 36 PM](https://user-images.githubusercontent.com/62969025/93921411-c6adde00-fccd-11ea-8e56-1439ae6a7ee8.png)
+
 ## Table of Contents
 - [Description](#description)
 - [User Story](#user-story)
